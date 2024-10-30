@@ -20,6 +20,12 @@ res.send("single products")
     }
 }
 let EditSingleProduct=async(req,res)=>{
+
+    try {
+        res.send("edit products")
+    } catch (error) {
+        
+    }
     
 }
 module.exports={GetAllProducts,GetSingleProduct,EditSingleProduct};
