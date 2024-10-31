@@ -1,43 +1,50 @@
-let bcrypt=require("bcryptjs")
-let jwt=require("jsonwebtoken")
-let {Schema,model}=require("mongoose")
-let userSchema = new Schema({
-      username:{required:true,type:String},
-      email:{required:true,type:String},
-      phone:{required:true,type:String},
-      password:{required:true,type:String},
-      isAdmin:{type:Boolean,default:false}
-},{timestamps:true})
-// hesh the password before save
-userSchema.pre("save", function(next){
-        let user = this;
-        if(!user.isModified("password")){
-            next()
-        }
-        user.password = bcrypt.hashSync(user.password,10)
-        next();
-})
-///////////////GENERATE TOKEN
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { Schema, model } = require("mongoose");
 
-userSchema.methods.generateToken = function() {
+const userSchema = new Schema(
+    {
+        username: { type: String, required: true },
+        email: { type: String, required: true, unique: true },
+        phone: { type: String, required: true },
+        password: { type: String, required: true },
+        isAdmin: { type: Boolean, default: false },
+    },
+    { timestamps: true }
+);
+
+// Hash the password before saving
+userSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) return next();
+
+    try {
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
+// Generate a JWT token
+userSchema.methods.generateToken = function () {
     return jwt.sign(
         {
             username: this.username,
             id: this._id,
-            isAdmin: this.isAdmin
+            isAdmin: this.isAdmin,
         },
         process.env.SECRET_KEY,
         { expiresIn: "3d" }
     );
 };
 
-userSchema.methods.comparePassword=function(pass){
-    return bcrypt.compareSync(pass,this.password)
- 
-}
+// Compare password for authentication
+userSchema.methods.comparePassword = async function (pass) {
+    return bcrypt.compare(pass, this.password);
+};
 
+// Define and export the User model
+const User = model("User", userSchema);
 
-
-let User= new model("User",userSchema)
-
-module.exports=User
+module.exports = User;

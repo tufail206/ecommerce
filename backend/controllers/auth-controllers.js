@@ -26,6 +26,7 @@ let Login=async (req, res) =>{
         return res.status(400).json({error: "Invalid credentials"});
     }  
     let token=await user.generateToken();
+  
     res.json({token, user: {id: user._id, username: user.username, email: user.email}});
 
   } catch (error) {

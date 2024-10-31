@@ -1,7 +1,8 @@
 let {Schema,model}=require("mongoose")
 
 let productSchema=new Schema({
-    name:{type:String,required:true},
+    name:{type:String,required:true ,unique:true},
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true }, 
     price:{type:Number,required:true},
     category: { type: String, required: true, enum: ["Mens", "Women", "Shoes", "Dress","Bed Room","Hot Sale","Office",
         "Living Room","Dining Room"] ,default: "Mens"},
@@ -13,6 +14,6 @@ let productSchema=new Schema({
 },{timestamps:true})
 
 
-let Prodcut=new model("Prodcut",productSchema);
+let Product=new model("Prodcut",productSchema);
 
-module.exports=Prodcut;
+module.exports=Product;
