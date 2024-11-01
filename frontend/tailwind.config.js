@@ -8,7 +8,8 @@ module.exports = {
     extend: {
       colors: {
         primary: '#FFFFFF',       // Main background color (white)
-        secondary: '#FF9800',     // Accent color (orange)
+        secondary: '#FF9800',  
+        secondaryHover: '#f39913',   // Accent color (orange)
         accent: '#F5F5F5',        // Light gray for background sections
         textPrimary: '#333333',   // Dark text color for readability
         textSecondary: '#888888', // Light text color for subtitles

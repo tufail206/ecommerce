@@ -15,7 +15,7 @@ const MyCarousel = () => {
       swipeable={true}
     >
       <div className="relative">
-        <img src="https://clauem2.arrowtheme.com/media/wysiwyg/slider/claue-sl-01.png" alt="Slide 1" />
+        <img src="" alt="Slide 1" />
         <div className=" w-[40%] absolute top-[30%] left-[10%] text-white bg-opacity-50 px-2 py-1 rounded-md text-left">
           <p className='text-xl text-textPrimary'>Spring-Summer 2024</p>
           <h1 className='text-4xl font-bold text-black my-4'>WELCOME TO THE <br /> 
@@ -26,7 +26,7 @@ const MyCarousel = () => {
       </div>
 
       <div className="relative">
-        <img src="https://clauem2.arrowtheme.com/media/wysiwyg/slider/claue-sl-02.png" alt="Slide 2" />
+        <img src="" alt="Slide 2" />
         <div className=" w-[40%] absolute top-[30%] left-[10%] text-white bg-opacity-50 px-2 py-1 rounded-md text-left">
           <p className='text-xl text-textPrimary'>Spring-Summer 2024</p>
           <h1 className='text-4xl font-bold text-black my-4'>WELCOME TO THE <br /> 
@@ -37,7 +37,7 @@ const MyCarousel = () => {
       </div>
 
       <div className="relative">
-        <img src="https://clauem2.arrowtheme.com/media/wysiwyg/slider/claue-sl-01.png" alt="Slide 3" />
+        <img src="" alt="Slide 3" />
         <div className=" w-[40%] absolute top-[30%] left-[10%] text-white bg-opacity-50 px-2 py-1 rounded-md text-left">
           <p className='text-xl text-textPrimary'>Spring-Summer 2024</p>
           <h1 className='text-4xl font-bold text-black my-4'>WELCOME TO THE <br /> 

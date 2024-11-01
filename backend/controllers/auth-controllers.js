@@ -1,14 +1,14 @@
 let User=require("../models/user-model")
 let Register=async(req,res)=>{
     try{
-        const {username, email,phone, password} = req.body;
+        const {name, email,phone, password} = req.body;
          const existingUser=await User.findOne({email});
          if(existingUser) return res.status(400).json({error: "User already exists"});
        
 
-         const user=await User.create({username, email,phone, password});
+         const user=await User.create({name, email,phone, password});
 
-        res.status(201).json({user:user,success: true});
+        res.status(201).json({msg:"Register Succesfully",success: true});
 
 
     }catch(error){
@@ -27,7 +27,7 @@ let Login=async (req, res) =>{
     }  
     let token=await user.generateToken();
   
-    res.json({token, user: {id: user._id, username: user.username, email: user.email}});
+    res.json({token, user: {id: user._id, name: user.name, email: user.email}});
 
   } catch (error) {
     console.log(error);
