@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {  FaBars, FaShoppingCart, FaUserCircle } from 'react-icons/fa'
 import { NavLink } from 'react-router-dom'
 import { IoMdClose } from "react-icons/io";
 
 import {} from "react-icons"
+import { useAuth } from '../context/Auth-context';
 const Header = () => {
     let [isMenuOpen,setIsMenuOpen]=useState(false)
+    let {isLoggedIn,logOut}=useAuth()
+ 
   return (
     <header className='header-section bg-primary shadow-bottom-only py-4 relative'>
         <div className='container mx-auto'>
@@ -29,6 +32,7 @@ const Header = () => {
                 <li className="px-2" onClick={()=>{setIsMenuOpen(false)}}>
                     <NavLink to={'/products'}>Prodcuts</NavLink>
                 </li>
+              
             </ul>
             </div>
         
@@ -53,12 +57,19 @@ const Header = () => {
                 </li>
             </ul>
             <ul className="social-icons flex items-center gap-6 text-lg">
-                <li >
-                    <NavLink to={'/login'} title='login' >
+              {isLoggedIn?  <li >
+                    <NavLink to={'/logout'} >
+                    Logout
+                     </NavLink>
+                    
+                 
+                </li>: <li >
+                    <NavLink to={'/login'}  >
                      <FaUserCircle className={'text-lg'}/> </NavLink>
                     
                  
-                </li>
+                </li>}
+              
                 <li className="relative">
   <NavLink to={'/cart'} className="relative inline-block">
     <FaShoppingCart className="text-lg" />
