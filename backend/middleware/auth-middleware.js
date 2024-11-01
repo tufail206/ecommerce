@@ -11,14 +11,13 @@ let AuthMiddleware=async(req,res,next)=>{
     if(!verifyToken){
         return res.status(403).json({message:"Token is invalid"})
     }
-console.log("verify toke ",verifyToken )
+
     req.user=verifyToken
     next()
 }
 let AdminMiddleware =async (req,res,next)=>{
-    
-
-    if(!req.user ||!req.isAdmin){
+  
+    if(!req.user ||!req.user.isAdmin){
         return res.status(403).json({message:"Unauthorized access"})
     }
     next()
