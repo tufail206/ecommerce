@@ -1,53 +1,51 @@
-import React from 'react';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import React from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-const MyCarousel = () => {
+const HeroBanner = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    autoplay: true,
+    loop: true,
+    autoplaySpeed: 3000,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
+    fade: true,
+  };
+
   return (
-    <Carousel
-      showArrows={true}
-      autoPlay={true}
-      infiniteLoop={true}
-      interval={3000}
-      showThumbs={false}
-      showStatus={false}
-      stopOnHover={true}
-      swipeable={true}
-    >
-      <div className="relative">
-        <img src="" alt="Slide 1" />
-        <div className=" w-[40%] absolute top-[30%] left-[10%] text-white bg-opacity-50 px-2 py-1 rounded-md text-left">
-          <p className='text-xl text-textPrimary'>Spring-Summer 2024</p>
-          <h1 className='text-4xl font-bold text-black my-4'>WELCOME TO THE <br /> 
-          <span className='text-secondary'>ECOM WORLD</span></h1>
-          <p className='text-textPrimary'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid maiores, blanditiis ad reiciendis rem optio ea soluta a officiis aperiam quas, molestiae voluptate quis! Nemo doloribus suscipit deleniti dolorem nostrum.</p>
-          <button className='btn border border-secondary px-4 py-2 text-black rounded my-4'>Shop Now</button>
-        </div>
-      </div>
-
-      <div className="relative">
-        <img src="" alt="Slide 2" />
-        <div className=" w-[40%] absolute top-[30%] left-[10%] text-white bg-opacity-50 px-2 py-1 rounded-md text-left">
-          <p className='text-xl text-textPrimary'>Spring-Summer 2024</p>
-          <h1 className='text-4xl font-bold text-black my-4'>WELCOME TO THE <br /> 
-          <span className='text-secondary'>ECOM WORLD</span></h1>
-          <p className='text-textPrimary'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid maiores, blanditiis ad reiciendis rem optio ea soluta a officiis aperiam quas, molestiae voluptate quis! Nemo doloribus suscipit deleniti dolorem nostrum.</p>
-          <button className='btn border border-secondary px-4 py-2 text-black rounded my-4'>Shop Now</button>
-        </div>
-      </div>
-
-      <div className="relative">
-        <img src="" alt="Slide 3" />
-        <div className=" w-[40%] absolute top-[30%] left-[10%] text-white bg-opacity-50 px-2 py-1 rounded-md text-left">
-          <p className='text-xl text-textPrimary'>Spring-Summer 2024</p>
-          <h1 className='text-4xl font-bold text-black my-4'>WELCOME TO THE <br /> 
-          <span className='text-secondary'>ECOM WORLD</span></h1>
-          <p className='text-textPrimary'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid maiores, blanditiis ad reiciendis rem optio ea soluta a officiis aperiam quas, molestiae voluptate quis! Nemo doloribus suscipit deleniti dolorem nostrum.</p>
-          <button className='btn border border-secondary px-4 py-2 text-black rounded my-4'>Shop Now</button>
-        </div>
-      </div>
-    </Carousel>
+    <div className="relative overflow-hidden w-full">
+      <Slider {...settings} className="w-full h-[450px] lg:h-[600px]">
+        {[...Array(3).keys()].map((item) => (
+          <div
+            key={item}
+            className="relative w-full bg-gray-300"  // Gray background applied here
+          >
+            <img
+              src={`https://via.placeholder.com/1200x600?text=Banner+${item + 1}`}
+              alt={`Banner ${item + 1}`}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-center px-4">
+              <h1 className="text-4xl lg:text-6xl font-bold mb-4 text-white">
+                Welcome to Our Site
+              </h1>
+              <p className="text-white text-lg lg:text-2xl max-w-lg mx-auto">
+                Discover amazing adventures and breathtaking views!
+              </p>
+              <button className="mt-6 px-6 py-3 bg-yellow-500 text-white font-semibold rounded hover:bg-yellow-600 transition">
+                Explore Now
+              </button>
+            </div>
+          </div>
+        ))}
+      </Slider>
+    </div>
   );
 };
 
-export default MyCarousel;
+export default HeroBanner;

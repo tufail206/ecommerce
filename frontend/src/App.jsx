@@ -10,6 +10,7 @@ import Services from './pages/Services'
 import Login from './pages/Login'
 import Cart from './pages/Cart'
 import Logout from './pages/Logout'
+import ProductDetails from './pages/ProductDetails'
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
   <Route path='/contact'   element={<Contact/>} />
   <Route path='/products'   element={<Products/>} />
   <Route path='/services'   element={<Services/>} />
+  <Route path='/product/:id'   element={<ProductDetails/>} />
 
   <Route path='/login'   element={<Login/>} />
   <Route path='/logout'   element={<Logout/>} />
