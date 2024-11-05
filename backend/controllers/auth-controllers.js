@@ -27,7 +27,7 @@ let Login=async (req, res) =>{
     }  
     let token=await user.generateToken();
   
-    res.json({token, user: {id: user._id, name: user.name, email: user.email}});
+    res.json({token, user: {id: user._id, name: user.name, email: user.email,isAdmin:user.isAdmin}});
 
   } catch (error) {
     console.log(error);

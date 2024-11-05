@@ -1,27 +1,46 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
-let appContext=createContext()
-export let AuthProvider=({children})=>{
-let [LoginUserData,setLoginUserData]=useState("")
-let [token,setToken]=useState(localStorage.getItem("token"))
+const AppContext = createContext();
 
-  let GenerateToken=(userToken,users)=>{
+export const AuthProvider = ({ children }) => {
+  const [loginUserData, setLoginUserData] = useState(() => JSON.parse(localStorage.getItem("loginUserData")) || null);
+  const [token, setToken] = useState(() => localStorage.getItem("token") || "");
 
-     localStorage.setItem("token",userToken)
-     setToken(userToken)
-     setLoginUserData(users)
-  }
-let logOut=()=>{
-    setToken("")
-    setLoginUserData(null)
-     localStorage.removeItem("token")
-   
-}
+  useEffect(() => {
+    // Sync token to localStorage
+    if (token) {
+      localStorage.setItem("token", token);
+    } else {
+      localStorage.removeItem("token");
+    }
+  }, [token]);
 
-  let isLoggedIn=!!token
-    return <appContext.Provider value={{GenerateToken,logOut,isLoggedIn,setLoginUserData,LoginUserData}}>{children}</appContext.Provider>
-}
+  useEffect(() => {
+    // Sync user data to localStorage
+    if (loginUserData) {
+      localStorage.setItem("loginUserData", JSON.stringify(loginUserData));
+    } else {
+      localStorage.removeItem("loginUserData");
+    }
+  }, [loginUserData]);
 
-export let useAuth=()=>{
-    return useContext(appContext)
-}
+  const GenerateToken = (userToken, user) => {
+    setToken(userToken);
+    setLoginUserData(user);
+  };
+
+  const logOut = () => {
+    setToken("");
+    setLoginUserData(null);
+  };
+
+  const isLoggedIn = Boolean(token);
+
+  return (
+    <AppContext.Provider value={{ token, GenerateToken, logOut, isLoggedIn, loginUserData }}>
+      {children}
+    </AppContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AppContext);

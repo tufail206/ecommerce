@@ -4,7 +4,6 @@ let cors = require("cors")
 let app = express();
 let auth_router = require("./routes/aut-routes");
 let product_router = require("./routes/product-routes")
-let cart_router = require("./routes/cart-routes")
 let ConnectDb = require("./utils/db")
 let corsData = {
     origin: "http://localhost:5173",
@@ -15,9 +14,9 @@ app.use(cors(corsData))
 app.use(express.json());
 let PORT = process.env.PORT
 // Routes
-app.use("/api/v1/", auth_router)
-app.use("/api/v1/", product_router)
-app.use("/api/v1/", cart_router)
+app.use("/api/v1", auth_router)
+app.use("/api/v1", product_router)
+
 ConnectDb().then(() => {
     console.log("Database connected successfully");
     app.listen(PORT, () => {

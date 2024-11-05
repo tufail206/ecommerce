@@ -5,6 +5,7 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './context/Auth-context.jsx'
 import { ProductProvider } from './context/product-context.jsx'
+import { FilterProvider } from './context/Filter-context.jsx'
 
 
 createRoot(document.getElementById('root')).render(
@@ -12,7 +13,13 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <AuthProvider>
         <ProductProvider>
-          <App />
+          <FilterProvider>
+         
+              <App />
+          
+
+          </FilterProvider>
+
         </ProductProvider>
 
       </AuthProvider>
