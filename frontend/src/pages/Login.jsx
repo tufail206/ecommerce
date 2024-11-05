@@ -39,9 +39,8 @@ let url;
     }
   )
  let userData=await response.json()
-
+      
   if(response.ok){
-
     let token=userData.token
 GenerateToken(token,userData.user)
     setIsLogIn(false)

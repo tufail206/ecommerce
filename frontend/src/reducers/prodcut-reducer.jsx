@@ -1,44 +1,40 @@
-let ProdcutReducer = (state, action) => {
-
+const ProdcutReducer = (state, action) => {
     switch (action.type) {
         case "SET_LOADING":
             return {
                 ...state,
                 isLoading: true
-            }
+            };
+
         case "SET_PRODCUTS_DATA":
-            let allData = action.payload;
-            let FilterData=action.payload.filter((CurElem,ind)=>CurElem.category=="Mens")
+            const allData = action.payload;
+            const FilterData = action.payload.filter((CurElem) => CurElem.category === "Mens");
             return {
                 ...state,
                 isLoading: false,
                 allProducts: allData,
-                MensProducts: FilterData,
-                SingleProducts: {},
-
-            }
+                MensProducts: FilterData
+            };
 
         case "SET_SINGLE_PRODCUT_DATA":
-
-            return{
+            return {
                 ...state,
                 isLoading: false,
                 SingleProducts: action.payload
-            }
-           
+            };
+
         case "SET_ERROR":
             return {
                 ...state,
                 isLoading: false,
                 isError: true,
                 allProducts: [],
-                FilterProducts: [],
-                SingleProducts: {},
+                MensProducts: [],
+            };
 
-            }
-
-        default: return state
+        default:
+            return state;
     }
-}
+};
 
-export default ProdcutReducer
+export default ProdcutReducer;

@@ -11,7 +11,7 @@ let {isLoggedIn,LoginUserData}=useAuth()
     MensProducts }=useProducts()
   return (
     <section className='mens-prodcut-section bg-slate-100 '>
-      <h1>{isLoggedIn&& LoginUserData.name}</h1>
+     
       <Slider/>
       <div className=" container mx-auto mens-category py-8">
           <h2 className='text-lg md:text-2xl'>Mens Products</h2>

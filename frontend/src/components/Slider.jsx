@@ -20,13 +20,13 @@ const HeroBanner = () => {
   return (
     <div className="relative overflow-hidden w-full">
       <Slider {...settings} className="w-full h-[450px] lg:h-[600px]">
-        {[...Array(3).keys()].map((item) => (
+        {[...Array(3).keys()].map((item,ind) => (
           <div
             key={item}
-            className="relative w-full bg-gray-300"  // Gray background applied here
+            className="relative w-full bg-gray-300 h-[500px]"  // Gray background applied here
           >
             <img
-              src={`https://via.placeholder.com/1200x600?text=Banner+${item + 1}`}
+              src={`images/banner/b${ind + 1}.jpeg`}
               alt={`Banner ${item + 1}`}
               className="w-full h-full object-cover"
             />

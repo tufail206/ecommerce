@@ -5,10 +5,10 @@ import { IoMdClose } from "react-icons/io";
 
 import {} from "react-icons"
 import { useAuth } from '../context/Auth-context';
+
 const Header = () => {
-    let [isMenuOpen,setIsMenuOpen]=useState(false)
-    let {isLoggedIn,logOut}=useAuth()
- 
+    const [isMenuOpen,setIsMenuOpen]=useState(false)
+    const { isLoggedIn, LoginUserData,logOut}=useAuth()
   return (
     <header className='header-section bg-primary shadow-bottom-only py-4 relative'>
         <div className='container mx-auto'>
@@ -43,6 +43,12 @@ const Header = () => {
                 <li>
                     <NavLink to={'/'}>Home</NavLink>
                 </li>
+                      {LoginUserData && LoginUserData.isAdmin ? (
+                          <li>
+                              <NavLink to={'/protected'}>Admin</NavLink>
+                          </li>
+                      ) : null}
+              
                 <li>
                     <NavLink to={'/about'}>About</NavLink>
                 </li>

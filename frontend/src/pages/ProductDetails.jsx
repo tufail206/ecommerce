@@ -1,95 +1,95 @@
-// ProductDetails.js
-
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useProducts } from '../context/product-context';
-import { useNavigate } from 'react-router-dom';
+
+import GoogleMap from '../components/GoogleMap';
+
 const ProductDetails = () => {
-  const { id } = useParams(); // Get the product ID from the URL
+  const { id } = useParams();
   const { fetchProductDetails, SingleProducts, isLoading } = useProducts();
-  const [quantity, setQuantity] = useState(1); // Default quantity is 1
-  let navigete = useNavigate()
-  // Fetch product details when the component mounts or the ID changes
+  const [quantity, setQuantity] = useState(1);
+
+
+  // Fetch product details when component mounts or id changes
   useEffect(() => {
     fetchProductDetails(id);
+    
   }, [id]);
 
-  // Calculate the total price based on quantity and product price
-  const totalPrice = SingleProducts.price * quantity;
-
-  // Increase quantity
   const incrementQuantity = () => {
-    if (quantity < SingleProducts.stock) { // Ensure stock limit
-      setQuantity(prev => prev + 1);
+    if (quantity < SingleProducts.stock) {
+      setQuantity((prev) => prev + 1);
     }
   };
 
-  // Decrease quantity
   const decrementQuantity = () => {
     if (quantity > 1) {
-      setQuantity(prev => prev - 1);
+      setQuantity((prev) => prev - 1);
     }
   };
 
-  // Add to Cart function (stub)
-  const handleAddToCart = () => {
-    // Add logic to handle cart addition here
-    console.log("Product added to cart:", SingleProducts, "Quantity:", quantity);
-    alert(`${SingleProducts.name} added to cart`);
-   
+  const handleAddToCarts = () => {
+    
   };
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p>Loading...</p>; // Display loading message
   }
 
   if (!SingleProducts || !SingleProducts.name) {
-    return <p>Product not found.</p>;
+    return <p>Product not found.</p>; // Show error if product data is missing
   }
 
   return (
-    <div className="product-details p-6 max-w-xl mx-auto bg-white rounded-xl shadow-md space-y-4">
-      <h1 className="text-3xl font-bold mb-4">{SingleProducts.name}</h1>
-      <img
-        src={SingleProducts.image}
-        alt={SingleProducts.name}
-        className="w-full h-64 object-cover rounded-md"
-      />
-      <p className="text-gray-700 mt-4">{SingleProducts.description}</p>
-      <p className="text-gray-500">Category: {SingleProducts.category}</p>
-      <p className="text-lg font-semibold">Price: ${SingleProducts.price}</p>
-      <p className="text-sm text-gray-600">In Stock: {SingleProducts.stock}</p>
-      <p className="text-sm text-gray-600">Sold: {SingleProducts.sold}</p>
+    <div className="container mx-auto py-6 px-4">
+      <p className="mb-4">
+        <Link to="/">Home</Link> / {SingleProducts.name}
+      </p>
 
-      {/* Quantity and Total Price Section */}
-      <div className="mt-6">
-        <div className="flex items-center space-x-3">
-          <button
-            onClick={decrementQuantity}
-            disabled={quantity <= 1}
-            className="bg-gray-200 px-3 py-1 rounded-lg"
-          >
-            -
-          </button>
-          <span className="text-lg font-semibold">{quantity}</span>
-          <button
-            onClick={incrementQuantity}
-            disabled={quantity >= SingleProducts.stock}
-            className="bg-gray-200 px-3 py-1 rounded-lg"
-          >
-            +
-          </button>
+      <div className="product-details flex flex-col md:flex-row gap-8 bg-white p-6 rounded-lg shadow-lg">
+        <div className="md:w-1/2">
+          <img
+            src={SingleProducts.image}
+            alt={SingleProducts.name}
+            className="w-full h-[490px] object-cover rounded-md"
+          />
         </div>
-        <p className="text-lg font-bold mt-3">Total Price: ${totalPrice.toFixed(2)}</p>
-      </div>
 
-      {/* Add to Cart Button */}
-      <button
-        onClick={handleAddToCart}
-        className="bg-blue-600 text-white py-2 px-6 mt-4 rounded-lg hover:bg-blue-700 w-full"
-      >
-        Add to Cart
-      </button>
+        <div className="md:w-1/2 flex flex-col gap-4">
+          <h1 className="text-3xl font-bold mb-2">{SingleProducts.name}</h1>
+          <p className="text-gray-700">{SingleProducts.description}</p>
+          <p className="text-lg font-semibold text-gray-500">Price: ${SingleProducts.price}</p>
+          <p className="text-sm text-gray-600">In Stock: {SingleProducts.stock}</p>
+
+          <div className="flex items-center gap-4 mt-6">
+            <button
+              onClick={decrementQuantity}
+              disabled={quantity <= 1}
+              className="bg-gray-200 px-3 py-1 rounded-lg"
+            >
+              -
+            </button>
+            <span className="text-lg font-semibold">{quantity}</span>
+            <button
+              onClick={incrementQuantity}
+              disabled={quantity >= SingleProducts.stock}
+              className="bg-gray-200 px-3 py-1 rounded-lg"
+            >
+              +
+            </button>
+          </div>
+          <p className="text-lg font-bold mt-3">Total Price: ${(SingleProducts.price * quantity).toFixed(2)}</p>
+
+          <button
+            onClick={handleAddToCarts}
+            className="bg-secondary text-white py-3 px-6 mt-4 rounded-lg hover:bg-primary-dark"
+          >
+            Add to Cart
+          </button>
+          <Link to="/products">Continue Shopping</Link>
+        </div>
+      </div>
+      <GoogleMap />
     </div>
   );
 };
