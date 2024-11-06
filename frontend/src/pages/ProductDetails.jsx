@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useProducts } from '../context/product-context';
-
+import { useCart } from '../context/Cart-context';
 import GoogleMap from '../components/GoogleMap';
-
+import {  toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Include the styles
 const ProductDetails = () => {
   const { id } = useParams();
   const { fetchProductDetails, SingleProducts, isLoading } = useProducts();
   const [quantity, setQuantity] = useState(1);
-
+  const { AddToCart } = useCart()
 
   // Fetch product details when component mounts or id changes
   useEffect(() => {
@@ -29,7 +30,8 @@ const ProductDetails = () => {
   };
 
   const handleAddToCarts = () => {
-    
+    AddToCart(quantity, SingleProducts.price*quantity,SingleProducts )
+    toast.success("This is a successfully add")
   };
 
   if (isLoading) {

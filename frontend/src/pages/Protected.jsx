@@ -3,15 +3,15 @@ import { useAuth } from '../context/Auth-context';
 import { useNavigate } from 'react-router-dom';
 
 const Protected = ({ children }) => {
-    const { LoginUserData } = useAuth();
+    const { loginUserData } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
         // Check if the user is logged in and is an admin
-        if (!LoginUserData || !LoginUserData.isAdmin) {
+        if (!loginUserData || !loginUserData.isAdmin) {
             navigate("/login");
         }
-    }, [LoginUserData, navigate]); // Add LoginUserData as a dependency
+    }, [loginUserData, navigate]); // Add LoginUserData as a dependency
 
     return (
         <>

@@ -3,12 +3,15 @@ import {  FaBars, FaShoppingCart, FaUserCircle } from 'react-icons/fa'
 import { NavLink } from 'react-router-dom'
 import { IoMdClose } from "react-icons/io";
 
-import {} from "react-icons"
 import { useAuth } from '../context/Auth-context';
+import { useCart } from '../context/Cart-context';
+import { toast } from 'react-toastify';
 
 const Header = () => {
     const [isMenuOpen,setIsMenuOpen]=useState(false)
-    const { isLoggedIn, LoginUserData,logOut}=useAuth()
+    const { isLoggedIn, loginUserData }=useAuth()
+ 
+    const { cart } = useCart();
   return (
     <header className='header-section bg-primary shadow-bottom-only py-4 relative'>
         <div className='container mx-auto'>
@@ -17,9 +20,7 @@ const Header = () => {
                 { isMenuOpen ? <IoMdClose onClick={()=>{setIsMenuOpen(!isMenuOpen)}} className='text-lg'/>: <FaBars onClick={()=>{setIsMenuOpen(!isMenuOpen)}} className='text-lg'/> }
                
                 <ul className={`w-max mobile-ul ${isMenuOpen ? "flex":"hidden"} flex-col md:hidden items-center transition-all  gap-4 text-lg absolute top-[100%] left-0 bg-[#fffefe] p-6 shadow-sm`}>
-                <li className="px-2" onClick={()=>{setIsMenuOpen(false)}} >
-                    <NavLink to={'/'}>Home</NavLink>
-                </li>
+              
                 <li className="px-2" onClick={()=>{setIsMenuOpen(false)}} >
                     <NavLink to={'/about'}>About</NavLink>
                 </li>
@@ -37,15 +38,13 @@ const Header = () => {
             </div>
         
             <div className="logo">
-                <h1 className='text-3xl font-semibold text-secondary'>LOGO</h1>
+                      <h1 className='text-3xl font-semibold text-secondary'><NavLink to={'/'}>LOGO</NavLink></h1>
             </div>
             <ul className="desktop-ul hidden md:flex items-center gap-6 text-lg">
-                <li>
-                    <NavLink to={'/'}>Home</NavLink>
-                </li>
-                      {LoginUserData && LoginUserData.isAdmin ? (
+               
+                      {loginUserData && loginUserData.isAdmin ? (
                           <li>
-                              <NavLink to={'/protected'}>Admin</NavLink>
+                              <NavLink to={'/admin'}>Admin</NavLink>
                           </li>
                       ) : null}
               
@@ -64,7 +63,7 @@ const Header = () => {
             </ul>
             <ul className="social-icons flex items-center gap-6 text-lg">
               {isLoggedIn?  <li >
-                    <NavLink to={'/logout'} >
+                          <NavLink to={'/logout'} onClick={() => toast.success("logout successfully")} >
                     Logout
                      </NavLink>
                     
@@ -79,9 +78,10 @@ const Header = () => {
                 <li className="relative">
   <NavLink to={'/cart'} className="relative inline-block">
     <FaShoppingCart className="text-lg" />
-    <div className="absolute -top-[10px] -right-2 bg-slate-900 text-white rounded-full p-1 text-xs w-5 h-5 flex items-center justify-center">
-      0 {/* Update this number dynamically as needed */}
-    </div>
+                              {cart.length>=1 && <div className="absolute -top-[10px] -right-2 bg-slate-900 text-white rounded-full p-1 text-xs w-5 h-5 flex items-center justify-center">
+                                  {cart.length}
+                              </div> }
+   
   </NavLink>
 </li>
 

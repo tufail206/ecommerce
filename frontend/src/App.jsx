@@ -12,12 +12,24 @@ import Logout from './pages/Logout'
 import ProductDetails from './pages/ProductDetails'
 import Protected from './pages/Protected'
 import Deshboard from './DASHBOARD/pages/Deshboard'
+import { ToastContainer } from 'react-toastify'
 
 
 function App() {
 
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Routes>
         <Route path='' element={<ShardComp />} >
           <Route path='/' index element={<Home />} />
@@ -27,7 +39,7 @@ function App() {
           <Route path='/services' element={<Services />} />
           <Route path='/product/:id' element={<ProductDetails />} />
           <Route
-            path='/protected'
+            path='/admin'
             element={<Protected><Deshboard /></Protected>}
           />
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Button from '../components/Button'
 import {useNavigate} from 'react-router-dom'
 import { useAuth } from '../context/Auth-context'
+import { toast } from 'react-toastify'
 // let RegisterUrl="http://localhost:3000/api/v1/register"
 let Url="http://localhost:3000/api/v1/register"
 const Login = () => {
@@ -44,6 +45,7 @@ let url;
     let token=userData.token
 GenerateToken(token,userData.user)
     setIsLogIn(false)
+    toast.success("logged in successfully ")
     !isLogin?Navigate('/'):""
     setUser({ name:"",
       email:"",
@@ -53,7 +55,8 @@ GenerateToken(token,userData.user)
       
     }
     else{
-     alert(userData.error)
+
+    toast.error(userData.error)
     }
   }
  
