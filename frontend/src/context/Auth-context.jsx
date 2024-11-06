@@ -1,9 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
+
 
 const AppContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [loginUserData, setLoginUserData] = useState(() => JSON.parse(localStorage.getItem("loginUserData")) || null);
+
+  const [loginUserData, setLoginUserData] = useState("");
   const [token, setToken] = useState(() => localStorage.getItem("token") || "");
 
   useEffect(() => {
@@ -30,8 +33,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logOut = () => {
+ 
     setToken("");
+    
+    localStorage.removeItem("cart")
     setLoginUserData(null);
+   
   };
 
   const isLoggedIn = Boolean(token);
