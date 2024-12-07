@@ -19,8 +19,12 @@ const Header = () => {
             <div className='block md:hidden bars text-lg'>
                 { isMenuOpen ? <IoMdClose onClick={()=>{setIsMenuOpen(!isMenuOpen)}} className='text-lg'/>: <FaBars onClick={()=>{setIsMenuOpen(!isMenuOpen)}} className='text-lg'/> }
                
-                <ul className={`w-max mobile-ul ${isMenuOpen ? "flex":"hidden"} flex-col md:hidden items-center transition-all  gap-4 text-lg absolute top-[100%] left-0 bg-[#fffefe] p-6 shadow-sm`}>
-              
+                <ul className={`w-max mobile-ul ${isMenuOpen ? "flex":"hidden"} flex-col md:hidden items-center transition-all  gap-4 text-lg absolute top-[100%] left-0 bg-[#fffefe] p-6 shadow-sm z-40`}>
+                          {loginUserData && loginUserData.isAdmin ? (
+                              <li>
+                                  <NavLink to={'/admin'}>Admin</NavLink>
+                              </li>
+                          ) : null}
                 <li className="px-2" onClick={()=>{setIsMenuOpen(false)}} >
                     <NavLink to={'/about'}>About</NavLink>
                 </li>

@@ -1,12 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { toast } from "react-toastify";
-
 
 const AppContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-
-  const [loginUserData, setLoginUserData] = useState("");
+  const [loginUserData, setLoginUserData] = useState(() => {
+    const storedUserData = localStorage.getItem("loginUserData");
+    return storedUserData ? JSON.parse(storedUserData) : null;
+  });
   const [token, setToken] = useState(() => localStorage.getItem("token") || "");
 
   useEffect(() => {
@@ -29,22 +29,21 @@ export const AuthProvider = ({ children }) => {
 
   const GenerateToken = (userToken, user) => {
     setToken(userToken);
-    setLoginUserData(user);
+    setLoginUserData(user); // Update loginUserData state directly
   };
 
   const logOut = () => {
- 
     setToken("");
-    
-    localStorage.removeItem("cart")
     setLoginUserData(null);
+    localStorage.removeItem("cart");
    
   };
 
   const isLoggedIn = Boolean(token);
+  const isAdmin = loginUserData?.isAdmin || false; // Check if the user is an admin
 
   return (
-    <AppContext.Provider value={{ token, GenerateToken, logOut, isLoggedIn, loginUserData }}>
+    <AppContext.Provider value={{ token, GenerateToken, logOut, isLoggedIn, loginUserData, isAdmin }}>
       {children}
     </AppContext.Provider>
   );

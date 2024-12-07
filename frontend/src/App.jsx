@@ -13,7 +13,9 @@ import ProductDetails from './pages/ProductDetails'
 import Protected from './pages/Protected'
 import Deshboard from './DASHBOARD/pages/Deshboard'
 import { ToastContainer } from 'react-toastify'
-
+import User from './DASHBOARD/pages/User'
+import Orders from './DASHBOARD/pages/Orders'
+import AdminProducts from './DASHBOARD/pages/products'
 
 function App() {
 
@@ -41,7 +43,11 @@ function App() {
           <Route
             path='/admin'
             element={<Protected><Deshboard /></Protected>}
-          />
+          >
+            <Route path='user' element={<User/>}  />
+            <Route path='orders' element={<Orders/>} />
+            <Route path='products' element={<AdminProducts />} />
+            </Route>
 
           <Route path='/login' element={<Login />} />
           <Route path='/logout' element={<Logout />} />

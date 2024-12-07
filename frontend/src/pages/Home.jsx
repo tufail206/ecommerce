@@ -8,7 +8,7 @@ import Card from '../components/Card'
 const Home = () => {
 let {isLoggedIn,LoginUserData}=useAuth()
   let { isLoading,
-    MensProducts }=useProducts()
+    mensProducts }=useProducts()
   return (
     <section className='mens-prodcut-section bg-slate-100 '>
      
@@ -17,7 +17,7 @@ let {isLoggedIn,LoginUserData}=useAuth()
           <h2 className='text-lg md:text-2xl'>Mens Products</h2>
         <div className="mens-cards flex gap-6 flex-wrap py-8">
           {
-            isLoading ? "LOADING...." : MensProducts?.map((cardData, ind) => {
+            isLoading ? "LOADING...." : mensProducts?.map((cardData, ind) => {
               return <Card key={ind} {...cardData} />
             })
           }

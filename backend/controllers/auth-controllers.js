@@ -11,8 +11,14 @@ let Register=async(req,res)=>{
         res.status(201).json({msg:"Register Succesfully",success: true});
 
 
-    }catch(error){
-        res.status(400).json({error: error.message});
+    }catch(err){
+        // res.status(400).json({error: error.message});
+        let status=400;
+        let msg=err.message
+        let error={
+          status,msg
+        }
+        next(error)
     }
 }
 
@@ -29,8 +35,14 @@ let Login=async (req, res) =>{
   
     res.json({token, user: {id: user._id, name: user.name, email: user.email,isAdmin:user.isAdmin}});
 
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    let status = 400;
+    let msg = err.message
+    let error = {
+      status, msg
+    }
+    next(error)
+  
   }
 }
 

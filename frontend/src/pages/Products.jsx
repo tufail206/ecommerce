@@ -5,10 +5,11 @@ import { useProducts } from "../context/product-context";
 import { useFilterProducts } from "../context/Filter-context";
 
 const Products = () => {
-  const { isLoading, allProducts, isError } = useProducts();
-  const { filter_products, filterDropDown, filterByCategory, searchProducts,filters:{text}, clearFilters } = useFilterProducts();
-  const uniqueCategories = [...new Set(allProducts?.map(product => product.category)
-  )];
+  const { isLoading, allProducts } = useProducts();
+  const { filter_products, filterDropDown, filterByCategory, searchProducts, filters: { text }, clearFilters } = useFilterProducts();
+
+  // Get unique categories from all products
+  const uniqueCategories = [...new Set(allProducts?.map((product) => product.category))];
 
   if (isLoading) {
     return (
@@ -25,12 +26,13 @@ const Products = () => {
           <h2>
             <Link to="/">Home</Link> / Products page
           </h2>
-        
+
           <h4>Total {filter_products?.length} Products</h4>
 
           <select
             className="p-2 border border-secondary outline-none bg-slate-100"
             onChange={filterDropDown}
+            aria-label="Sort products"
           >
             <option value="a-z">A-Z</option>
             <option value="z-a">Z-A</option>
@@ -40,14 +42,16 @@ const Products = () => {
         </div>
 
         <div className="product-content flex gap-4 py-8">
+          {/* Filter Section */}
           <div className="product-filters-section flex flex-col gap-10 md:px-3 lg:px-0">
             <form onSubmit={(e) => e.preventDefault()}>
               <input
                 type="text"
                 placeholder="Search items..."
-          value={text}
+                value={text}
                 className="border border-secondary p-2 outline-none"
                 onChange={searchProducts}
+                aria-label="Search products"
               />
             </form>
             <div>
@@ -60,6 +64,7 @@ const Products = () => {
                     value={category}
                     className="block my-4 cursor-pointer hover:text-secondary"
                     onClick={() => filterByCategory(category)}
+                    aria-label={`Filter by category ${category}`}
                   />
                 ))}
               </div>
@@ -71,17 +76,22 @@ const Products = () => {
             <div
               className="lg:text-xl cursor-pointer text-red-600"
               onClick={clearFilters}
+              role="button"
+              aria-label="Clear all filters"
             >
               Clear Filters
             </div>
           </div>
 
-          <div className={`product-cards flex justify-center items-center gap-6  flex-wrap`}>
-            { 
-              filter_products ? filter_products?.map((cardData, ind) => (<Card key={ind} {...cardData} />
-              )):" you have no products"
-
-            }
+          {/* Product Cards Section */}
+          <div className="product-cards flex justify-center items-center gap-6 flex-wrap">
+            {filter_products && filter_products.length > 0 ? (
+              filter_products.map((cardData, ind) => (
+                <Card key={ind} {...cardData} />
+              ))
+            ) : (
+              <p className="text-xl text-gray-500">No products available with the selected filters.</p>
+            )}
           </div>
         </div>
       </div>

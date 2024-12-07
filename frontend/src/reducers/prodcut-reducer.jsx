@@ -1,26 +1,27 @@
-const ProdcutReducer = (state, action) => {
+const productReducer = (state, action) => {
     switch (action.type) {
         case "SET_LOADING":
             return {
                 ...state,
-                isLoading: true
+                isLoading: true,
+                isError: false
             };
 
-        case "SET_PRODCUTS_DATA":
+        case "SET_PRODUCTS_DATA":
             const allData = action.payload;
-            const FilterData = action.payload.filter((CurElem) => CurElem.category === "Mens");
+            const filteredData = allData.filter((item) => item.category === "Mens"); // Use camelCase for variable names
             return {
                 ...state,
                 isLoading: false,
                 allProducts: allData,
-                MensProducts: FilterData
+                mensProducts: filteredData // Use camelCase to match state property
             };
 
-        case "SET_SINGLE_PRODCUT_DATA":
+        case "SET_SINGLE_PRODUCT_DATA":
             return {
                 ...state,
                 isLoading: false,
-                SingleProducts: action.payload
+                singleProduct: action.payload // Use camelCase to match state property
             };
 
         case "SET_ERROR":
@@ -29,7 +30,7 @@ const ProdcutReducer = (state, action) => {
                 isLoading: false,
                 isError: true,
                 allProducts: [],
-                MensProducts: [],
+                mensProducts: []
             };
 
         default:
@@ -37,4 +38,4 @@ const ProdcutReducer = (state, action) => {
     }
 };
 
-export default ProdcutReducer;
+export default productReducer;

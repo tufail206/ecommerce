@@ -1,53 +1,63 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
-import reducer from "../reducers/prodcut-reducer";
-let productContext = createContext()
-let ProductUrl = "http://localhost:3000/api/v1/products"
+import reducer from "../reducers/prodcut-reducer"; 
 
-export let ProductProvider = ({ children }) => {
-    let initialState = {
+const ProductContext = createContext();
+const ProductUrl = "http://localhost:3000/api/v1/products";
+
+export const ProductProvider = ({ children }) => {
+    const initialState = {
         allProducts: [],
-       MensProducts: [],
-        SingleProducts: {},
+        mensProducts: [], // camelCase for consistency
+        singleProduct: {},
         isLoading: false,
         isError: false,
-        filters:{
-            search:""
-        }
-    }
-    let [state, dispatch] = useReducer(reducer, initialState)
-
-    let GellAllProducts = async (url) => {
-        try {
-            dispatch({ type: "SET_LOADING" })
-            let response = await fetch(url)
-            let data = await response.json();
-
-            dispatch({ type: "SET_PRODCUTS_DATA", payload: data })
-        } catch (error) {
-            dispatch({ type: "SET_ERROR" })
-        }
-    }
-    useEffect(() => {
-        GellAllProducts(ProductUrl)
-    }, [])
-
-    //fetch single prodcut data
-    const fetchProductDetails = async (id) => {
-        try {
-            dispatch({ type: "SET_LOADING" })
-            const response = await fetch(`http://localhost:3000/api/v1/product/${id}`); // Adjust 
-             
-            const singleData = await response.json();
-            dispatch({ type: "SET_SINGLE_PRODCUT_DATA", payload: singleData })
-        } catch (error) {
-            dispatch({ type: "SET_ERROR" })
+        filters: {
+            search: ""
         }
     };
-   
-    return <productContext.Provider value={{ ...state, fetchProductDetails }}>
-        {children}</productContext.Provider>
-}
 
-export let useProducts = () => {
-    return useContext(productContext)
-}
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    const getAllProducts = async () => {
+        try {
+            dispatch({ type: "SET_LOADING" });
+            const response = await fetch(ProductUrl);
+            if (!response.ok) throw new Error("Failed to fetch products");
+
+            const data = await response.json();
+            dispatch({ type: "SET_PRODUCTS_DATA", payload: data }); // Correct action type
+        } catch (error) {
+            console.error(error);
+            dispatch({ type: "SET_ERROR" });
+        }
+    };
+
+    useEffect(() => {
+        getAllProducts();
+    }, []);
+
+    // Fetch single product data
+    const fetchProductDetails = async (id) => {
+        try {
+            dispatch({ type: "SET_LOADING" });
+            const response = await fetch(`http://localhost:3000/api/v1/product/${id}`);
+            if (!response.ok) throw new Error("Failed to fetch product details");
+
+            const singleData = await response.json();
+            dispatch({ type: "SET_SINGLE_PRODUCT_DATA", payload: singleData }); // Correct action type
+        } catch (error) {
+            console.error(error);
+            dispatch({ type: "SET_ERROR" });
+        }
+    };
+
+    return (
+        <ProductContext.Provider value={{ ...state, fetchProductDetails }}>
+            {children}
+        </ProductContext.Provider>
+    );
+};
+
+export const useProducts = () => {
+    return useContext(ProductContext);
+};
