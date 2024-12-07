@@ -7,6 +7,7 @@ import { AuthProvider } from './context/Auth-context.jsx'
 import { ProductProvider } from './context/product-context.jsx'
 import { FilterProvider } from './context/Filter-context.jsx'
 import { CartProvider } from './context/Cart-context.jsx'
+import { AdminProvider } from './context/Admin-context.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -16,7 +17,10 @@ createRoot(document.getElementById('root')).render(
           <FilterProvider>
 
             <CartProvider>
-              <App />
+              <AdminProvider>
+                <App />
+              </AdminProvider>
+           
               </CartProvider>
 
           </FilterProvider>

@@ -45,7 +45,7 @@ let url;
     let token=userData.token
 GenerateToken(token,userData.user)
     setIsLogIn(false)
-    toast.success("logged in successfully ")
+    { isLogin ? toast.success("Singup  successfully ") :toast.success("logged in successfully ") } 
     !isLogin?Navigate('/'):""
     setUser({ name:"",
       email:"",

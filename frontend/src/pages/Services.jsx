@@ -1,5 +1,6 @@
 // components/Services.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 const Services = () => {
@@ -74,7 +75,7 @@ const Services = () => {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-semibold mb-6">Get Started Today!</h2>
           <p className="text-lg text-gray-700 mb-4">Join thousands of satisfied customers and take your shopping experience to the next level.</p>
-          <button className="bg-blue-600 text-white px-6 py-3 rounded-full text-xl">Start Shopping</button>
+          <button className="bg-blue-600 text-white px-6 py-3 rounded-full text-xl"><Link to={'/products'}>Start Shopping</Link></button>
         </div>
       </section>
     </div>
